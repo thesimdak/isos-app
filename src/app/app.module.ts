@@ -15,6 +15,7 @@ import { CompetitionResolver } from './resolvers/competition.resolver';
 import { CategoriesResolver } from './resolvers/categories.resolver';
 import { TopResultsCategoriesResolver } from './resolvers/top-results-categories.resolver';
 import { TopResultsModule } from './pages/top-results/top-results.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TopResultsModule } from './pages/top-results/top-results.module';
     CompetitionListModule,
     LandingModule,
     ResultsModule,
-    TopResultsModule
+    TopResultsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: "BASE_API_URL", useValue: environment.apiUrl },

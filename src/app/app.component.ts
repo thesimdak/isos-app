@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SelectItem } from 'primeng/api/selectitem';
 import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 
 @Component({
@@ -8,7 +7,7 @@ import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, 
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public title = 'isos-app';
+  public title = 'svetsplhu.cz - Výsledky';
 
   public loading: boolean = true;
 
