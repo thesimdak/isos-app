@@ -24,7 +24,6 @@ export class CompetitionListComponent {
 
   public selectSeason($event) {
     this.selectedSeason = $event.value;
-    console.log(this.selectedSeason);
     this.competitions$ = this.competitionService.getCompetitionsBySeason(this.selectedSeason);
   }
 

@@ -1,16 +1,19 @@
 import { Component, OnDestroy } from '@angular/core';
 import { SelectItem } from 'primeng/api/selectitem';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Category } from 'src/app/shared/model/category.interface';
 import { ResultService } from 'src/app/shared/services/result.service';
 import { Competition } from 'src/app/shared/model/competition.interface';
 import { ResultItem } from 'src/app/shared/model/result-item.interface';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common'
+import { MEN_CATEGORY_ID } from 'src/app/app.constants';
 
 @Component({
   selector: 'isos-results',
   templateUrl: './results.component.html',
-  styleUrls: ['./results.component.css']
+  styleUrls: ['./results.component.css'],
+  providers: [Location, { provide: LocationStrategy, useClass: PathLocationStrategy }]
 })
 export class ResultsComponent implements OnDestroy {
 
@@ -20,26 +23,36 @@ export class ResultsComponent implements OnDestroy {
   public competition: Competition;
   public results: ResultItem[];
   public loading: boolean = true;
+  public categoryId: string;
 
-  constructor(private route: ActivatedRoute, private resultService: ResultService) {
-    this.categories = this.route.snapshot.data['categories'].map((category: Category) => { return {label: category.label, value: category.id} }) ;
+  constructor(private route: ActivatedRoute, private resultService: ResultService, private location: Location) {
+    this.categories = this.route.snapshot.data['categories'].map((category: Category) => { return { label: category.label, value: category.id } });
     this.competition = this.route.snapshot.data['competition']
-    this.selectedCategory = this.categories[0].value;
+    this.categoryId = this.route.snapshot.queryParams['category'];
+    let index = this.findIndexForCategoryId(this.categoryId);
+    if (index != -1) {
+      this.selectedCategory = this.categories[index].value;
+    } else {
+      this.selectedCategory = this.categories[this.findIndexForCategoryId(MEN_CATEGORY_ID.toString())].value;
+      this.location.go(this.route.snapshot.url.join('/') + '?category=' + this.selectedCategory)
+
+    }
     this.subscription = this.resultService.getResult(this.competition.id, this.selectedCategory)
-                .subscribe((results) => {
-                  this.loading = false;
-                  this.results = results;
-                });
+      .subscribe((results) => {
+        this.loading = false;
+        this.results = results;
+      });
   }
 
   public selectCategory($event) {
     this.selectedCategory = $event.value;
     this.loading = true;
+    this.location.go(this.route.snapshot.url.join('/') + '?category=' + this.selectedCategory)
     this.subscription = this.resultService.getResult(this.competition.id, this.selectedCategory)
-                .subscribe((results) => {
-                  this.loading = false;
-                  this.results = results;
-                });
+      .subscribe((results) => {
+        this.loading = false;
+        this.results = results;
+      });
   }
 
   public isTime3(): boolean {
@@ -73,6 +86,18 @@ export class ResultsComponent implements OnDestroy {
     } else {
       return time.toFixed(2).toString();
     }
+  }
+
+  private findIndexForCategoryId(categoryId: string): number {
+    let i: number = 0;
+    for (let item of this.categories) {
+      const cat = item.value.toString();
+      if (cat === categoryId) {
+        return i;
+      }
+      i++;
+    }
+    return -1;
   }
 
   ngOnDestroy(): void {

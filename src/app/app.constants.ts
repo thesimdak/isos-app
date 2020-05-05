@@ -11,3 +11,5 @@ export const URL_CONSTANTS: Object = {
     TOP_RESULT_LIST: '/result/top/:categoryId',
     DELETE_COMPETITION: '/result/:competitionId'
 };
+
+export const MEN_CATEGORY_ID = 3;
