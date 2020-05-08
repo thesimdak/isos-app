@@ -1,5 +1,5 @@
-<isos-navigation></isos-navigation>
-<div class="container light">
+<isos-navigation *ngIf="showNav"></isos-navigation>
+<div [ngClass]="{'container light': showNav === true}">
   <div *ngIf="loading" class="spinner">
     <div class="d-flex justify-content-center">
       <div class="spinner-border" role="status">

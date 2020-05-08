@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,20 @@ export class AppComponent {
   public title = 'svetsplhu.cz - Výsledky';
 
   public loading: boolean = true;
+  public showNav = false;
+  private initialized = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private activeRoute: ActivatedRoute) {
+    this.activeRoute.queryParams.subscribe(
+      params => {
+        if (params['resultView'] != undefined) {
+          this.showNav = "true" !== params['resultView'];
+        } else if (this.initialized) {
+          this.showNav = true;
+        }
+        this.initialized = true;
+      }
+    );
     router.events.subscribe((routerEvent: RouterEvent) => {
       this.checkRouterEvent(routerEvent);
     });

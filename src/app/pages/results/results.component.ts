@@ -24,17 +24,21 @@ export class ResultsComponent implements OnDestroy {
   public results: ResultItem[];
   public loading: boolean = true;
   public categoryId: string;
+  public resultView: boolean;
 
   constructor(private route: ActivatedRoute, private resultService: ResultService, private location: Location) {
     this.categories = this.route.snapshot.data['categories'].map((category: Category) => { return { label: category.label, value: category.id } });
     this.competition = this.route.snapshot.data['competition']
     this.categoryId = this.route.snapshot.queryParams['category'];
+    this.resultView = "true" === this.route.snapshot.queryParams['resultView'];
     let index = this.findIndexForCategoryId(this.categoryId);
     if (index != -1) {
       this.selectedCategory = this.categories[index].value;
     } else {
       this.selectedCategory = this.categories[this.findIndexForCategoryId(MEN_CATEGORY_ID.toString())].value;
-      this.location.go(this.route.snapshot.url.join('/') + '?category=' + this.selectedCategory)
+      let url = this.route.snapshot.url.join('/') + '?category=' + this.selectedCategory;
+      url = this.resultView === true ? url + '&resultView=' + this.resultView : url;
+      this.location.go(url)
 
     }
     this.subscription = this.resultService.getResult(this.competition.id, this.selectedCategory)
@@ -47,7 +51,9 @@ export class ResultsComponent implements OnDestroy {
   public selectCategory($event) {
     this.selectedCategory = $event.value;
     this.loading = true;
-    this.location.go(this.route.snapshot.url.join('/') + '?category=' + this.selectedCategory)
+    let url = this.route.snapshot.url.join('/') + '?category=' + this.selectedCategory;
+      url = this.resultView === true ? url + '&resultView=' + this.resultView : url;
+    this.location.go(url);
     this.subscription = this.resultService.getResult(this.competition.id, this.selectedCategory)
       .subscribe((results) => {
         this.loading = false;
