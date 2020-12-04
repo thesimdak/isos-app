@@ -18,7 +18,7 @@ export class AppComponent {
       params => {
         if (params['resultView'] != undefined) {
           this.showNav = "true" !== params['resultView'];
-        } else if (this.initialized) {
+        } else {
           this.showNav = true;
         }
         this.initialized = true;

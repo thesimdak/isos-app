@@ -8,6 +8,9 @@ import { CompetitionResolver } from './resolvers/competition.resolver';
 import { CategoriesResolver } from './resolvers/categories.resolver';
 import { TopResultsCategoriesResolver } from './resolvers/top-results-categories.resolver';
 import { TopResultsComponent } from './pages/top-results/top-results.component';
+import { CompetitionManagementModule } from './pages/management/competition-management.module';
+import { CompetitionsResolver } from './resolvers/competitions.resolver';
+import { CompetitionManagementComponent } from './pages/management/competition-management.component';
 
 const routes: Routes = [
   {
@@ -24,6 +27,11 @@ const routes: Routes = [
     path: 'top-results',
     component: TopResultsComponent,
     resolve: { categories: TopResultsCategoriesResolver }
+  },
+  {
+    path: 'management',
+    component: CompetitionManagementComponent,
+    resolve: { seasons: SeasonResolver }
   },
   {
     path: '',

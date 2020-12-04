@@ -16,6 +16,8 @@ import { CategoriesResolver } from './resolvers/categories.resolver';
 import { TopResultsCategoriesResolver } from './resolvers/top-results-categories.resolver';
 import { TopResultsModule } from './pages/top-results/top-results.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { CompetitionsResolver } from './resolvers/competitions.resolver';
+import { CompetitionManagementModule } from './pages/management/competition-management.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     NavigationModule,
     HttpClientModule,
     CompetitionListModule,
+    CompetitionManagementModule,
     LandingModule,
     ResultsModule,
     TopResultsModule,
@@ -38,7 +41,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     SeasonResolver,
     CompetitionResolver,
     CategoriesResolver,
-    TopResultsCategoriesResolver
+    TopResultsCategoriesResolver,
+    CompetitionsResolver
 ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
