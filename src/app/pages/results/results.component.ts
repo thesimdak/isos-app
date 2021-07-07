@@ -35,11 +35,16 @@ export class ResultsComponent implements OnDestroy {
     if (index != -1) {
       this.selectedCategory = this.categories[index].value;
     } else {
-      this.selectedCategory = this.categories[this.findIndexForCategoryId(MEN_CATEGORY_ID.toString())].value;
+      const menCategoryIndex = this.findIndexForCategoryId(MEN_CATEGORY_ID.toString());
+      if (this.categories.length - 1 <= menCategoryIndex) {
+        this.selectedCategory = this.categories[menCategoryIndex].value;
+      } else {
+        this.selectedCategory = this.categories[0].value;
+      }
+      
       let url = this.route.snapshot.url.join('/') + '?category=' + this.selectedCategory;
       url = this.resultView === true ? url + '&resultView=' + this.resultView : url;
-      this.location.go(url)
-
+      this.location.go(url);
     }
     this.subscription = this.resultService.getResult(this.competition.id, this.selectedCategory)
       .subscribe((results) => {
