@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { skip } from 'rxjs/operators';
 import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,15 +20,22 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.activeRoute.queryParams.pipe(skip(1)).subscribe(
-      params => {
-        if (params['resultView'] != undefined) {
-          this.showNav = "true" !== params['resultView'];
-        } else {
-          this.showNav = true;
-        }
+    this.router.events.subscribe(evt => {
+      // this is an injected Router instance
+      if (evt instanceof NavigationEnd) {
+        this.activeRoute.queryParams.subscribe(
+          params => {
+            if (params['resultView'] != undefined) {
+              this.showNav = "true" !== params['resultView'];
+            } else if (params  != undefined) {
+              this.showNav = true;
+            }
+          }
+        );
       }
-    );
+    });
+
+    
     
     this.router.events.subscribe((routerEvent: RouterEvent) => {
       this.checkRouterEvent(routerEvent);
