@@ -8,6 +8,7 @@ import { Competition } from 'src/app/shared/model/competition.interface';
 import { ResultItem } from 'src/app/shared/model/result-item.interface';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common'
 import { MEN_CATEGORY_ID } from 'src/app/app.constants';
+import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'isos-results',
@@ -25,8 +26,18 @@ export class ResultsComponent implements OnDestroy {
   public loading: boolean = true;
   public categoryId: string;
   public resultView: boolean;
+  public showTitle= false;
 
   constructor(private route: ActivatedRoute, private resultService: ResultService, private location: Location) {
+    this.route.queryParams.pipe(skip(1)).subscribe(
+      params => {
+        if (params['resultView'] != undefined) {
+          this.showTitle = "true" !== params['resultView'];
+        } else {
+          this.showTitle = true;
+        }
+      }
+    );
     this.categories = this.route.snapshot.data['categories'].map((category: Category) => { return { label: category.label, value: category.id } });
     this.competition = this.route.snapshot.data['competition']
     this.categoryId = this.route.snapshot.queryParams['category'];

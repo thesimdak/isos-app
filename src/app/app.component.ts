@@ -1,33 +1,40 @@
-import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { skip } from 'rxjs/operators';
+import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public title = 'svetsplhu.cz - Výsledky';
 
   public loading: boolean = true;
   public showNav = false;
-  private initialized = false;
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute) {
-    this.activeRoute.queryParams.subscribe(
+  constructor(private router: Router, 
+    private activeRoute: ActivatedRoute) {
+    
+  }
+  ngOnInit(): void {
+
+    this.activeRoute.queryParams.pipe(skip(1)).subscribe(
       params => {
         if (params['resultView'] != undefined) {
           this.showNav = "true" !== params['resultView'];
         } else {
           this.showNav = true;
         }
-        this.initialized = true;
       }
     );
-    router.events.subscribe((routerEvent: RouterEvent) => {
+    
+    this.router.events.subscribe((routerEvent: RouterEvent) => {
       this.checkRouterEvent(routerEvent);
     });
   }
+
+
 
   checkRouterEvent(routerEvent: RouterEvent): void {
     if (routerEvent instanceof NavigationStart) {

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://svetsplhu-isos.herokuapp.com'
+  apiUrl: 'https://isos.svetsplhu.cz:8080'
 };
 
 /*

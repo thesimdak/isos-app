@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://svetsplhu-isos.herokuapp.com'
+  apiUrl: 'https://isos.svetsplhu.cz:8080'
 };
