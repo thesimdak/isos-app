@@ -1,6 +1,6 @@
 # IsosApp
 
-Application holding results from compatitions of czech rope climbing. It allows to browse througth historical results for a normal user and upload new results in an excel file for an administrator. 
+Application holding results from compatitions of czech rope climbing. It allows to browse througth historical results for a normal user and upload new results in an excel file for an administrator. https://svetsplhu-isos-app.herokuapp.com/
 
 ## Development server
 
