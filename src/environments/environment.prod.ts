@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://isos.svetsplhu.cz:8080'
+  apiUrl: 'https://isos.svetsplhu.cz/api'
 };
