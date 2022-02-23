@@ -1,6 +1,6 @@
 # IsosApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.0.
+Application holding results from compatitions of czech rope climbing. It allows to browse througth historical results for a normal user and upload new results in an excel file for an administrator. https://svetsplhu-isos-app.herokuapp.com/
 
 ## Development server
 
