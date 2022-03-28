@@ -9,10 +9,10 @@ import { CompetitionManagementComponent } from './competition-management.compone
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { FileUploadModule } from 'primeng/fileupload/';
 import { MessageModule } from 'primeng/message';
-import {MessagesModule} from 'primeng/messages';
-
+import { MessagesModule } from 'primeng/messages';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { NominationCriteriaPopupModule } from './nomination-criteria-popup/nomination-criteria-popup.module';
 @NgModule({
     imports: [
       CardModule,
@@ -25,12 +25,13 @@ import {MessagesModule} from 'primeng/messages';
       ConfirmDialogModule,
       MessageModule,
       MessagesModule,
-      FileUploadModule
+      DynamicDialogModule,
+      NominationCriteriaPopupModule 
               ],
   declarations: [
     CompetitionManagementComponent
   ],
-  providers: [ConfirmationService, MessageService],
+  providers: [DialogService, ConfirmationService, MessageService],
   exports: [CompetitionManagementComponent],
 })
 export class CompetitionManagementModule { }

@@ -9,6 +9,10 @@ import { Competition } from "src/app/shared/model/competition.interface";
 import { URL_CONSTANTS } from 'src/app/app.constants';
 import { Inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { DatePipe } from "@angular/common";
+import { NominationCriteriaService } from "src/app/shared/services/nomination-criteria.service";
+import { NominationCriteriaPopupComponent } from "./nomination-criteria-popup/nomination-criteria-popup.component";
+import { DialogService } from "primeng";
 
 @Component({
   selector: "isos-competition-management",
@@ -24,11 +28,15 @@ export class CompetitionManagementComponent {
   public selectedSeason: string;
   public seasons: SelectItem[];
   public competitions$: Observable<Competition[]>;
+  public nominationCriteriaYears$: Observable<number[]>;
+  private datePipe = new DatePipe('en-US');
 
   constructor( 
     @Inject("BASE_API_URL") private baseUrl: string,
     private route: ActivatedRoute,
     private competitionService: CompetitionService,
+    private nominationCriteriaService: NominationCriteriaService,
+    private dialogService: DialogService,
     public authenticationService: AuthenticationService,
     public confirmationService: ConfirmationService,
     private messageService: MessageService
@@ -47,6 +55,7 @@ export class CompetitionManagementComponent {
     this.competitions$ = this.competitionService.getCompetitionsBySeason(
       this.selectedSeason
     );
+    this.nominationCriteriaYears$ = this.nominationCriteriaService.getNominationCriteriaSeasons();
   }
 
   public selectSeason($event) {
@@ -60,6 +69,13 @@ export class CompetitionManagementComponent {
     this.competitions$ = this.competitionService.getCompetitionsBySeason(
       this.selectedSeason
     );
+  }
+
+  public createNominationCriteria(): void {
+    this.dialogService.open(NominationCriteriaPopupComponent, {
+      header: 'Vytvořit nominační kriteria',
+      width: '50%'
+  });
   }
 
   public onFileSend() {
@@ -91,5 +107,9 @@ export class CompetitionManagementComponent {
           this.messageService.add({severity:'success', summary:'Závod bude odstraněn...', detail:'Mějte trpělivost, odstranění závodu může chvilku trvat.'});
       },
     });
+  }
+
+  public getDate(date: string): string {
+    return this.datePipe.transform(new Date(date), 'dd.MM.yyyy');
   }
 }

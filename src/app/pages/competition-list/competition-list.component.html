@@ -8,7 +8,7 @@
           {{competition.name}}
         </div>
         <div class="ui-g-4 competition-title">
-          {{competition.date['dayOfMonth']}}.{{competition.date['monthValue']}}.{{competition.date['year'] }}
+          {{ getDate(competition.date) }}
         </div>
       </div>
     </p-card>

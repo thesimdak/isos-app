@@ -9,7 +9,8 @@ export const URL_CONSTANTS: Object = {
     ROPE_CLIMBERS: '/rope-climbers',
     RESULT_LIST: '/result/:competitionId/:categoryId',
     TOP_RESULT_LIST: '/result/top/:categoryId',
-    DELETE_COMPETITION: '/result/:competitionId'
+    DELETE_COMPETITION: '/result/:competitionId',
+    NOMINATION_CRITERIAS: '/nomination-criterias/seasons',
 };
 
 export const MEN_CATEGORY_ID = 3;
