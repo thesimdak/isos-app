@@ -11,6 +11,8 @@ import { TopResultsComponent } from './pages/top-results/top-results.component';
 import { CompetitionManagementModule } from './pages/management/competition-management.module';
 import { CompetitionsResolver } from './resolvers/competitions.resolver';
 import { CompetitionManagementComponent } from './pages/management/competition-management.component';
+import { NominationCriteriaComponent } from './pages/nomination-criteria/nomination-criteria.component';
+import { AllCategoriesResolver } from './resolvers/all-categories.resolver';
 
 const routes: Routes = [
   {
@@ -36,6 +38,11 @@ const routes: Routes = [
   {
     path: '',
     component: LandingComponent
+  },
+  {
+    path: 'nomination-criteria/:season',
+    component: NominationCriteriaComponent,
+    resolve: { categories: AllCategoriesResolver }
   },
  // {
 //    path: 'management',

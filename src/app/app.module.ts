@@ -18,6 +18,8 @@ import { TopResultsModule } from './pages/top-results/top-results.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CompetitionsResolver } from './resolvers/competitions.resolver';
 import { CompetitionManagementModule } from './pages/management/competition-management.module';
+import { AllCategoriesResolver } from './resolvers/all-categories.resolver';
+import { NominationCriteriaModule } from './pages/nomination-criteria/nomination-criteria.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { CompetitionManagementModule } from './pages/management/competition-mana
     HttpClientModule,
     CompetitionListModule,
     CompetitionManagementModule,
+    NominationCriteriaModule,
     LandingModule,
     ResultsModule,
     TopResultsModule,
@@ -41,6 +44,7 @@ import { CompetitionManagementModule } from './pages/management/competition-mana
     SeasonResolver,
     CompetitionResolver,
     CategoriesResolver,
+    AllCategoriesResolver,
     TopResultsCategoriesResolver,
     CompetitionsResolver
 ],
